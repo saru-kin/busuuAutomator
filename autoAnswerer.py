@@ -5,7 +5,7 @@ from pynput.mouse import Controller as MouseController
 
 from btnManager import *
 
-def intervalCheckIfOnScreen(btnName, sleepMin = 0.001, sleepMax = 1, maxChecks = 5):
+def intervalCheckIfOnScreen(btnName, sleepMin = 0.001, sleepMax = 1, maxChecks = 2):
     print("currently checking if " + btnName + " is on screen \n")
     result = None
     check = 0
