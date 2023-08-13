@@ -1,19 +1,39 @@
 import pyautogui as pag
 import time as t
-import keyboard as clav
 import random as rd
-import win32api, win32con
+from pynput.mouse import Button, Controller
 
 from math import *
 
+def rescale(x, y):
+    x = (x * 1800) / 3024
+    y = (y * 1170) / 1964
+    return x, y
 
 def click(x, y):
-    win32api.SetCursorPos([x, y])
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
-    t.sleep(0.01)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
-
-def randClickOn(btnName, conf=0.8, sleepTime=0, checkCountermax = 5, verticalOffset = 0, horizontalOffset = 0, Vrestrain = 0, Hrestrain = 0):
+    x, y = rescale(x, y)
+    mouse = Controller()
+    # mouse.move(x,y)
+    mouse.position = (x + 40, y + 40)
+    t.sleep(0.1)
+    mouse.click(Button.left)
+    mouse.position = (x, y)
+    t.sleep(0.1)
+    mouse.click(Button.left)
+    mouse.position = (x + 40, y + 40)
+    t.sleep(0.1)
+    mouse.press(Button.left)
+    t.sleep(0.3)
+    mouse.release(Button.left)
+    mouse.position = (x, y)
+    t.sleep(0.1)
+    mouse.press(Button.left)
+    t.sleep(0.3)
+    mouse.release(Button.left)
+    # mouse.position = (y, x)
+    # mouse.click(Button.left)
+    
+def randClickOn(btnName, conf=0.8, sleepTime=0, checkCountermax = 5, verticalOffset = 5, horizontalOffset = 5, Vrestrain = 0, Hrestrain = 0):
     if sleepTime == 0:
         sleepTime = rd.uniform(0, 0.2)
     checkCounter = 0
@@ -23,15 +43,16 @@ def randClickOn(btnName, conf=0.8, sleepTime=0, checkCountermax = 5, verticalOff
         checkCounter = checkCounter + 1
         t.sleep(sleepTime)
     if not btn == None:
-        randClickIn(btn.left + horizontalOffset, btn.top + verticalOffset, btn.width - Hrestrain, btn.height - Vrestrain, sleepTime)
+        print("button found")
+        randClickIn(btn.left, btn.top, btn.width - Hrestrain, btn.height - Vrestrain, sleepTime)
     return btn
 
 def randClickIn(left, top, width, height, sleepTime=0):
     if sleepTime == 0:
         sleepTime = rd.uniform(0, 0.2)
     executionReport = "chill"
-    x = left + floor(rd.uniform(1, width))
-    y = top + floor(rd.uniform(1, height))
+    x = left
+    y = top
     t.sleep(sleepTime)
     click(x, y)
     return executionReport

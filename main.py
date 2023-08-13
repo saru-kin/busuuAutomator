@@ -1,8 +1,6 @@
 import pyautogui as pag
 import time as t
-import keyboard as clav
 import random as rd
-import win32api, win32con
 
 from btnManager import *
 from autoAnswerer import *
@@ -24,7 +22,26 @@ def autoLesson():
     if questionType == 4:
         rep = rd.randint(1, 2)
         answerTrueFalse(rep)
-            
+    if questionType == 5:
+        answerQuestionButton("order1")
+    if questionType == 6:
+        answerQuestionButton("order2")
+    if questionType == 7:
+        answerQuestionButton("order3")
+    if questionType == 8:
+        answerQuestionButton("test")
+                       
+def main():
+    """Utility function to get screen resolution"""
 
+    mouse = MouseController()
+# 1799, 1169
+    while True:
+        mouse.position = (830, 600)
+        mouse.click(Button.left)
+        t.sleep(0.1)
+        # mouse.position = (979, 724)
 t.sleep(2)
+# main()
+# 1799, 1169
 autoLesson()
